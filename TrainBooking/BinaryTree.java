@@ -124,7 +124,7 @@ public class BinaryTree {
     }
 
     //    1.5.      In-order traverse to file
-    public boolean inOrderTraverseToFile(String fileName, LinkedList<Node> list) {
+    public boolean inOrderTraverseToFile(String fileName) {
         try {
             FileWriter writer = new FileWriter(fileName);
             inOrderTraverseAndWrite(root, writer);
