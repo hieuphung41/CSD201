@@ -25,7 +25,7 @@ public class BinaryTree {
     }
 
     //    1.1.      Load data from file
-    public boolean loadDataFromFile(String fileName, LinkedList<Node> list) {
+    public boolean loadDataFromFile(String fileName) {
         try {
             File file = new File(fileName);
             if (!file.exists()) {
@@ -47,7 +47,8 @@ public class BinaryTree {
                     int booked = Integer.parseInt(parts[3].trim());
                     double departTime = Double.parseDouble(parts[4].trim());
                     String departPlace = parts[5].trim();
-                    list.add(new Node(new Train(tcode, trainName, seat, booked, departTime, departPlace)));
+                    Node newNode = new Node(new Train(tcode, trainName, seat, booked, departTime, departPlace));
+                    insertData(newNode);
                     line = reader.readLine();
                 }
             }
@@ -125,21 +126,22 @@ public class BinaryTree {
     //    1.5.      In-order traverse to file
     public boolean inOrderTraverseToFile(String fileName, LinkedList<Node> list) {
         try {
-            try (FileWriter writer = new FileWriter(fileName)) {
-                for (Node p : list) {
-                    String line = p.train.getTcode() + ", "
-                            + p.train.getTrainName() + ", "
-                            + p.train.getSeat() + ", "
-                            + p.train.getBooked() + ", "
-                            + p.train.getDepartTime() + ", "
-                            + p.train.getDepartPlace() + "\n";
-                    writer.write(line);
-                }
-            }
+            FileWriter writer = new FileWriter(fileName);
+            inOrderTraverseAndWrite(root, writer);
+            writer.close();
             return true;
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public void inOrderTraverseAndWrite(Node node, FileWriter writer) throws IOException {
+        if (node == null) {
+            return;
+        }
+        inOrderTraverseAndWrite(node.left, writer);
+        writer.write(node.train.toString());
+        inOrderTraverseAndWrite(node.right, writer);
     }
 
     //    1.6.      Search by tcode
