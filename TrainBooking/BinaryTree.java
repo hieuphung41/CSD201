@@ -1,14 +1,26 @@
 package TrainBooking;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ *
+ * @author Admin
+ */
 public class BinaryTree {
 
     Node root;
 
     public BinaryTree() {
+        root = null;
+    }
+
+    void clear() {
         root = null;
     }
 
@@ -67,30 +79,29 @@ public class BinaryTree {
     }
 
     public void insertData(Node data) {
-        Node f = null, q = root;
-        if (searchByTcode(q, data.train.getTcode()) != null) {
-            System.out.println("Key already exists!");
+        if (root == null) {
+            root = data;
             return;
         }
-        while (q != null) {
-            if (q.compareTo(data) == 0) {
-                System.out.println("Key cannot be duplicated...");
+        Node f, p;
+        f = null;
+        p = root;
+        while (p != null) {
+            if (data.compareTo(p) == 0) {
+                System.out.println("The key " + data.train.getTcode() + " already exists, no insertion");
                 return;
             }
-            if (q.compareTo(data) < 0) {
-                f = q;
-                q = q.right;
+            f = p;
+            if (data.compareTo(p) < 0) {
+                p = p.left;
             } else {
-                f = q;
-                q = q.left;
+                p = p.right;
             }
         }
-        if (f == null) {
-            root = data;
-        } else if (data.compareTo(f) > 0) {
-            f.right = data;
-        } else {
+        if (data.compareTo(f) < 0) {
             f.left = data;
+        } else {
+            f.right = data;
         }
     }
 
@@ -147,6 +158,7 @@ public class BinaryTree {
     //    1.6.      Search by tcode
     public Node searchByTcode(Node data, String tcode) {
         if (data == null) {
+            System.out.println("Not found!");
             return null;
         }
         if (data.compareTo(tcode) == 0) {
@@ -222,51 +234,46 @@ public class BinaryTree {
         }
     }
 
-    //    1.8.      Simply balancing
-    public void buildArray(ArrayList a, Node p) {
+    // 1.8. Simply balancing
+    void inOrder(ArrayList<Train> t, Node p) {
         if (p == null) {
             return;
         }
-        buildArray(a, p.left);
-        a.add(p);
-        buildArray(a, p.right);
+        inOrder(t, p.left);
+        t.add(p.train);
+        inOrder(t, p.right);
     }
 
-    //insert all items from an array to a new BST
-    public void balance(ArrayList a, int f, int l) {
-        if (f > l) {
+    void balance(ArrayList<Train> t, int i, int j) {
+        if (i > j) {
             return;
         }
-        int m = (f + l) / 2;
-        Node p = (Node) a.get(m);
-        insertData(p);
-        balance(a, f, m - 1);
-        balance(a, m + 1, l);
+        int k = (i + j) / 2;
+        Train train = t.get(k);
+        Node x = new Node(train);
+        insertData(x);
+        visit(x);
+        balance(t, i, k - 1);
+        balance(t, k + 1, j);
     }
 
-    public void balance(Node p) {
-        ArrayList a = new ArrayList();
-        buildArray(a, p);
-        int l = a.size(), f = 0;
-        //create a new tree and insert all items from a to the BST
-        BinaryTree t = new BinaryTree();
-        t.balance(a, f, l - 1);
-        root = t.root;
+    void bal() {
+        ArrayList<Train> t = new ArrayList<>();
+        inOrder(t, root);
+        clear();
+        int n = t.size();
+        balance(t, 0, n - 1);
     }
 
     //    1.9.      Count number of trains
     public int countTrains(Node node) {
         if (node == null) {
             return 0;
+        } else {
+            int leftCount = countTrains(node.left);
+            int rightCount = countTrains(node.right);
+            return leftCount + rightCount + 1;
         }
-        int count = 1; // Tính luôn node hiện tại
-        if (node.left != null) {
-            count += countTrains(node.left); // Đếm các node bên trái
-        }
-        if (node.right != null) {
-            count += countTrains(node.right); // Đếm các node bên phải
-        }
-        return count;
     }
 
 }

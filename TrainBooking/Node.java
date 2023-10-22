@@ -16,11 +16,13 @@ public class Node {
     }
 
     public int compareTo(Node other) {
-        return this.train.getTcode().compareTo(other.train.getTcode());
+        int thisNumber = Integer.parseInt(this.train.getTcode().substring(1));
+        int otherNumber = Integer.parseInt(other.train.getTcode().substring(1));
+        return Integer.compare(thisNumber, otherNumber);
     }
 
     public int compareTo(String key) {
-        return this.train.getTcode().compareTo(key);
+        int thisNumber = Integer.parseInt(this.train.getTcode().substring(1));
+        return Integer.compare(thisNumber, Integer.parseInt(key.substring(1)));
     }
-
 }

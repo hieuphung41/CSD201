@@ -69,6 +69,11 @@ public class Train {
         this.departPlace = departPlace;
     }
 
+    @Override
+    public String toString() {
+        return tcode + ", " + trainName + ", " + seat + ", " + booked + ", " + departTime + ", " + departPlace + "\n";
+    }
+
     private Validation validation = new Validation();
 
     public void createTrain() {

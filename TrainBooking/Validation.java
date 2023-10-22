@@ -74,8 +74,11 @@ public class Validation {
         while (true) {
             try {
                 String str = scanner.nextLine().trim();
-                if (str.matches("^[0-9]$")) return str;
-                else throw new Exception();
+                if (str.matches("^[0-9]+$")) {
+                    return str;
+                } else {
+                    throw new Exception();
+                }
             } catch (Exception e) {
                 System.err.println("Invalid phone!");
                 System.out.println("Input again: ");

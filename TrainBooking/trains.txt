@@ -1,0 +1,16 @@
+T5,Train 5,150,20,7,Hue
+T14,Train 14,800,110,18,Binhduong  
+T10,Train 10,400,60,14,Quangninh
+T3,Train 3,200,50,10,Danang
+T9,Train 9,350,45,13,Haiphong
+T8,Train 8,250,35,12,Haiduong  
+T13,Train 13,700,100,17,Quangngai
+T4,Train 4,300,80,11.5,Nhatrang
+T11,Train 11,500,70,15,Lamdong
+T16,Train 16,1000,140,20,Caobang
+T1,Train 1,50,10,6.5,Hanoi
+T15,Train 15,900,120,19,Cantho
+T12,Train 12,600,90,16,Khanhhoa 
+T7,Train 7,180,25,9,Thanhhoa
+T2,Train 2,100,30,8,HCM
+T6,Train 6,120,15,5,Vinh

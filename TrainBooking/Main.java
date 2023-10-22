@@ -60,7 +60,7 @@ public class Main {
                     bst.deleteTcodeByCopy(tcode1);
                     break;
                 case 8:
-                    bst.balance(bst.root);
+                    bst.bal();
                     break;
                 case 9:
                     System.out.println("Number of trains: " + bst.countTrains(bst.root));
